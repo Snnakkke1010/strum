@@ -6,6 +6,7 @@ import Auth from "../Auth/Auth";
 import Cabinet from "../Cabinet/Cabinet";
 import UserProfileUpdate from "../UpdateProfile/UpdateProfile";
 import Vacancies from "../Vacancies/Vacancies";
+import ProtectedRoute from "../../utils/ProtectedRoute";
 
 
 
@@ -14,7 +15,9 @@ const ProjectRoutes = () => {
       <Routes>
           <Route path={ROUTES.ANONIM} element={<NoLoginPage />} />
           <Route path={ROUTES.SIGNUP} element={<Auth/>} />
-          <Route path={ROUTES.PROFILE} element={<Cabinet/>} />
+          <Route element={<ProtectedRoute />}>
+            <Route path={ROUTES.PROFILE} element={<Cabinet/>} />
+          </Route>
           <Route path={ROUTES.UPDATEPROFILE} element={<UserProfileUpdate/>} />
           <Route path={ROUTES.VACANCIES} element={<Vacancies/>} />
       </Routes>

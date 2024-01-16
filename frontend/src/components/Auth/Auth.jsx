@@ -1,9 +1,63 @@
     import React, {useEffect, useState} from "react";
     import classes from './Auth.module.scss';
-    import { Link } from "react-router-dom";
+    import { Link, useNavigate } from "react-router-dom";
+    import { useDispatch } from "react-redux";
+    import { createUser, loginUser } from "../../features/user/userSlice";
+import { jwtDecode } from "jwt-decode";
 
     const Auth = () => {
         const [isActive, setIsActive] = useState(false);
+
+        const [email, setEmail] = useState('');
+        const [username, setUsername] = useState('');
+        const [password, setPassword] = useState('');
+        const salt = 'string';
+        const dispatch = useDispatch();
+        const navigate = useNavigate();
+
+        const handleRegisterSubmit = async (event) => {
+            event.preventDefault();
+    
+            const user = {
+                firstName: username.split(' ')[0],
+                lastName: username.split(' ')[1] || '',
+                email: email,
+                passwordHash: password,
+                salt: salt
+            };
+    
+            try {
+                // Dispatch an action to register a new user
+                await dispatch(createUser(user));
+                handleRegisterClick();
+                // After successful registration, navigate to the login page
+                
+            } catch (error) {
+                console.error('Error during user registration:', error);
+            }
+        };
+    
+        const handleLoginSubmit = async (event) => {
+            event.preventDefault();
+    
+            const user = {
+                email: email,
+                passwordHash: password,
+            };
+    
+            try {
+                dispatch(loginUser(user)).then((resultAction) => {
+                    if (loginUser.fulfilled.match(resultAction)) {
+
+                      const decoded = jwtDecode(localStorage.getItem('token')); 
+                      console.log(decoded) ;
+                      navigate(`/profile/${decoded.nameid}`); // де history - це об'єкт history з react-router-dom
+                    } 
+                  })
+            } catch (error) {
+                console.error('Error during user login:', error);
+            }
+        };
 
         const handleRegisterClick = () => {
             setIsActive(!isActive);
@@ -27,18 +81,28 @@
 
         return (
             <div className={classes.container}>
-                <div className={`${classes.wrapper} ${isActive ? classes.active : ''}`}>
+            <div className={`${classes.wrapper} ${isActive ? classes.active : ''}`}>
                 <span className={classes.animate}></span>
                 <span className={classes.animate2}></span>
                 <div className={`${classes.form} ${classes.login}`}>
                     <h2 className={classes.animation}>Login</h2>
-                    <form>
+                    <form onSubmit={handleLoginSubmit}>
                         <div className={`${classes.form__input} ${classes.animation}`}>
-                            <input type="email" required/>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
                             <label>Email</label>
                         </div>
                         <div className={`${classes.form__input} ${classes.animation}`}>
-                            <input type="password" required/>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
                             <label>Password</label>
                         </div>
                         <button type="submit" className={`${classes.form__button} ${classes.animation}`}>Login</button>
@@ -52,23 +116,41 @@
                     <p>We are glad to see you on our project! </p>
                 </div>
 
-                 <div className={`${classes.form} ${classes.register} ${isActive ? classes.active : ''}`}>
+                <div className={`${classes.form} ${classes.register} ${isActive ? classes.active : ''}`}>
                     <h2 className={classes.animation}>Sign up</h2>
-                    <form>
+                    <form onSubmit={handleRegisterSubmit}>
                         <div className={`${classes.form__input} ${classes.animation}`}>
-                            <input type="text" required/>
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
                             <label>First Name</label>
                         </div>
                         <div className={`${classes.form__input} ${classes.animation}`}>
-                            <input type="text" required/>
+                            <input
+                                type="text"
+                                required
+                            />
                             <label>Last Name</label>
                         </div>
                         <div className={`${classes.form__input} ${classes.animation}`}>
-                            <input type="email" required/>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
                             <label>Email</label>
                         </div>
                         <div className={`${classes.form__input} ${classes.animation}`}>
-                            <input type="password" required/>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
                             <label>Password</label>
                         </div>
                         <button type="submit" className={`${classes.form__button} ${classes.animation}`}>Sign Up</button>
@@ -82,7 +164,7 @@
                     <p>We are glad to see you on our project! </p>
                 </div>
             </div>
-            </div>
+        </div>
         );
     }
 

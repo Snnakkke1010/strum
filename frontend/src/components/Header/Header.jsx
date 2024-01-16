@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { RiAlignJustify, RiCloseFill } from 'react-icons/ri'; // Import icons if not already imported
 import classes from './Header.module.scss';
+import { jwtDecode } from "jwt-decode";
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -27,7 +28,7 @@ const Header = () => {
             setMenuOpen(false);
         }
     }, [size.width, menuOpen]);
-
+    const id = jwtDecode(localStorage.getItem('token'));
     const menuToggleHandler = () => {
         setMenuOpen(prevState => !prevState);
     };
@@ -52,7 +53,7 @@ const Header = () => {
                             <Link to="/direct" className={classes.header__content__link}>Повідомлення</Link>
                         </li>
                         <li className={classes.header__content__item}>
-                            <Link to="/profile" className={classes.header__content__link}>Власний профіль</Link>
+                            <Link to={`/profile/${id.nameid}`} className={classes.header__content__link}>Власний профіль</Link>
                         </li>
                     </ul>
                 </nav>
