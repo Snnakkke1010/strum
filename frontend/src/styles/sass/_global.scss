@@ -1,0 +1,51 @@
+@import "varialbes";
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body,
+button,
+input{
+    font-family: $font-montserrat;
+}
+
+body{
+    width: 100%;
+    color: $text-color;
+    transition: .4s;
+    position: absolute;
+    background-color: $body-color;
+
+}
+
+h1,h2,h3,h4{
+
+}
+
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+img{
+    max-width: 100%;
+    height: auto;
+}
+
+button{
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+#root {
+    height: 100%;
+}

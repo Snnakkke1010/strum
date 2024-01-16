@@ -1,0 +1,255 @@
+@import "./../../styles/sass/varialbes";
+@import "./../../styles/sass/global";
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-top: 150px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-direction: row;
+}
+
+.card {
+  width: 350px;
+  height: 515px;
+  background: $body-color;
+  box-shadow: 0px 0px 25px $item-color;
+  border: 1px solid $item-color;
+  transition: 1s ease all;
+  transform-style: preserve-3d;
+
+  &__inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: 1s ease all;
+    transform-style: preserve-3d;
+  }
+}
+
+.card:hover {
+  transform: rotateY(180deg);
+}
+
+.front,
+.back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.front {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 2;
+
+  img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+
+  &__content {
+    padding: 60px 40px;
+    z-index: 1;
+    align-items: start; /* Center content horizontally */
+    text-align: start; /* Center content vertically */
+
+
+    h2 {
+      font-weight: 800;
+      font-size: 32px;
+      margin-bottom: 10px;
+      text-align: start;
+    }
+
+    p {
+      color: #ccc;
+      font-size: 16px;
+      font-weight: 800;
+    }
+  }
+}
+
+.back {
+  background: $body-color;
+  color: $text-color;
+  padding: 20px 30px;
+  transform: rotateY(180deg);
+  z-index: 3;
+
+  .redbtn {
+    background: $error-color;
+    box-shadow: 0px 0px 25px $error-color;
+    border: 1px solid $error-color;
+  }
+
+  button {
+    margin: 5px;
+    width: 80px;
+    height: 30px;
+    background: $item-color;
+    color: $text-color;
+    font-weight: 800;
+    box-shadow: 0px 0px 25px $item-color;
+    border: 1px solid $item-color;
+    border-radius: 25px;
+    transition: 0.5s ease all;
+
+    &:hover {
+      opacity: 50%;
+    }
+  }
+
+  img {
+    width: 90px;
+    height: 90px;
+  }
+
+  h1 {
+    color: $item-color;
+    font-size: 50px;
+    font-weight: 900;
+    line-height: 55px;
+    margin-bottom: 10px;
+  }
+
+  span {
+    opacity: 80%;
+    font-weight: 400;
+  }
+
+  p {
+    color: #ccc;
+    font-size: 15px;
+  }
+
+  h4 {
+    color: $text-color;
+    line-height: 30px;
+  }
+
+  hr {
+    margin-top: 20px;
+  }
+
+  &__content {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__col {
+    flex: 1;
+    text-align: center;
+    color: $item-color;
+    font-size: 12px;
+    padding-bottom: 60px;
+
+    h2 {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    p {
+      color: $text-color;
+    }
+  }
+}
+
+.posts {
+  flex: 1;
+  padding-left: 20px;
+
+  &__button {
+    margin-top: 10px;
+    width: 120px;
+    height: 30px;
+    background: $item-color;
+    color: $text-color;
+    font-weight: 800;
+    box-shadow: 0px 0px 25px $item-color;
+    border: 1px solid $item-color;
+    border-radius: 25px;
+    transition: 0.5s ease all;
+
+    &:hover {
+      opacity: 60%;
+    }
+  }
+}
+
+.post {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid $item-color;
+  background-color: $body-color;
+
+}
+
+.post__header {
+  display: flex;
+  align-items: center;
+}
+
+.post__header img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.post__headerText h3 {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.post__headerEdit {
+  margin-left: 50px;
+  cursor: pointer;
+  transition: .5s color;
+
+  &:hover {
+    color: #ccc;
+  }
+}
+
+.post__content {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.post__footer {
+  margin-top: 10px;
+}
+
+.post__time {
+  margin-top: 10px;
+}
+
+.post__likeButton,
+.post__commentButton {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background: $item-color;
+  color: $text-color;
+  font-weight: 800;
+  border: 1px solid $item-color;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: .5s all;
+
+  &:hover {
+    opacity: 70%;
+  }
+}

@@ -1,0 +1,150 @@
+@import "./../../styles/sass/varialbes";
+@import "./../../styles/sass/global";
+
+// ... (previous imports)
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-top: 150px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-direction: row;
+}
+
+.filterPanel {
+  width: 200px;
+  padding: 20px;
+  background: $body-color;
+  box-shadow: 0px 0px 25px $item-color;
+  border: 1px solid $item-color;
+  margin-right: 20px;
+
+  h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  div {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    select {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid $item-color;
+      border-radius: 5px;
+    }
+  }
+}
+
+.posts {
+  flex: 1;
+}
+
+.post {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid $item-color;
+  background-color: $body-color;
+
+  .post__header {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .post__headerText {
+   display: flex;
+    flex-direction: column; // Adjusted to column layout
+    align-items: flex-start;
+
+    h3 {
+      font-weight: 800;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: $text-color;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .post__info {
+    display: flex;
+    flex-direction: column; // Adjusted to column layout
+    align-items: flex-start;
+
+    p {
+      color: $text-color;
+      font-size: 14px;
+      margin-bottom: 5px;
+
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+  .post__time {
+    margin-top: 10px;
+    color: $text-color;
+    font-size: 12px;
+  }
+
+  .post__content {
+    margin-top: 10px;
+    font-size: 14px;
+    color: $text-color;
+  }
+
+  .post__footer {
+    margin-top: 10px;
+
+    button {
+      margin-right: 10px;
+      padding: 5px 10px;
+      background: $item-color;
+      color: $text-color;
+      font-weight: 800;
+      border: 1px solid $item-color;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: .5s all;
+
+      &:hover {
+        opacity: 70%;
+      }
+    }
+  }
+}
+
+.wrapper2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    margin-right: 10px;
+  }
+}
