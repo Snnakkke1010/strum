@@ -30,14 +30,36 @@ export const getPostsByUserId = createAsyncThunk(
   );
 
 
+//   export const sendDeletePost = createAsyncThunk(
+//     'posts/sendDeletePost',
+//     async (postId, thunkApi) => {
+//       try {
+//         const res = await axios.delete(`${USER_URL}/api/post/DeletePost/${postId}`);
+//         console.log('Response:', res.data);
+//         return postId; // Return the postId to remove it from the state
+//       } catch (err) {
+//         console.log('Error:', err);
+//         return thunkApi.rejectWithValue({
+//           message: err.message,
+//           name: err.name,
+//           code: err.code,
+//         });
+//       }
+//     }
+//   );
+  
+
+
 export const sendPost = createAsyncThunk('posts/sendPost',
   async ({text, userId}, thunkApi) => {
     try {
     
-      const res = await axios.post(`${USER_URL}/api/post/AddPost`,{
-        Text: text,
-        UserId: userId
+      const res = await axios.post(`${USER_URL}/api/post/AddPost`,
+      {
+        text: text,
+        userId: userId
       });
+    
       console.log('Response:', res.data);
       return res.data;
 
@@ -54,33 +76,38 @@ export const sendPost = createAsyncThunk('posts/sendPost',
 );
 
 const postSlice = createSlice({
-    name: 'posts',
+    name: 'post',
     initialState: {
         list: [],
-        isLoading: false,
+        isLoad: false,
     },
     extraReducers: (builder) => {
         builder
         .addCase(getPostsByUserId.pending, (state) => {
-            state.isLoading = true;
+            state.isLoad = true;
         })
         .addCase(getPostsByUserId.fulfilled, (state, {payload}) => {
             console.log('Payload:', payload);
-            state.isLoading = false;
+            state.isLoad = false;
             state.list = payload; // Assuming the payload is an array of posts
         })
         .addCase(getPostsByUserId.rejected, (state) => {
-            state.isLoading = false;
+            state.isLoad = false;
         })
         .addCase(sendPost.pending, (state) => {
-            state.isLoading = true;
+            state.isLoad = true;
         })
         .addCase(sendPost.fulfilled, (state, { payload }) => {
-            state.isLoading = false;
+            state.isLoad = false;
         })
         .addCase(sendPost.rejected, (state) => {
-            state.isLoading = false;
+            state.isLoad = false;
         });
+        // builder.addCase(sendDeletePost.fulfilled, (state, { payload }) => {
+        //     // Remove the deleted post from the state
+        //     state.list = state.list.filter((post) => post.id !== payload);
+        //     state.isLoad = false;
+        //   });
        
     }
 })

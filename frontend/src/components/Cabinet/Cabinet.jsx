@@ -17,8 +17,8 @@ import { getPostsByUserId } from "../../features/post/postSlice";
 
 const Cabinet = () => {
     const { isLoading, currentUser } = useSelector((state) => state.user);
-    // const {  list, postsLoading } = useSelector((state) => state.posts);
-    // console.log(list);
+    const {isLoad, list} = useSelector((state) => state.post);
+    console.log(list);
     
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen2, setIsModalOpen2] = useState(false);
@@ -31,7 +31,8 @@ const Cabinet = () => {
     const handleModalToggle2 = () =>
         {setIsModalOpen2(!isModalOpen2);
     };
-
+    const decoded = jwtDecode(localStorage.getItem('token'));
+    const userId = decoded.nameid; 
 
     const handleLogout = () => {
         try {
@@ -44,13 +45,11 @@ const Cabinet = () => {
         }
       };
       useEffect(() => {
-        const decoded = jwtDecode(localStorage.getItem('token'));
-        const userId = decoded.nameid; // Assuming there is a userId field in the token
+        // Assuming there is a userId field in the token
         dispatch(getUserById(userId));
         dispatch(getPostsByUserId(userId));
       }, [dispatch]);
 
-     const decoded = jwtDecode(localStorage.getItem('token'));
 
     return (
         <div>
@@ -120,18 +119,18 @@ const Cabinet = () => {
                 >
                   Добавити пост
                 </button>
-                <AddPost isOpen={isModalOpen2} onClose={handleModalToggle2} />
-                {/* Sample Post */}
-                <div className={classes.post}>
+                <AddPost isOpen={isModalOpen2} onClose={handleModalToggle2} userId={userId} />
+                {[...list].reverse().map((post) => (
+                <div key={post.id} className={classes.post}>
                   <div className={classes.post__header}>
                     <img src={IMAGE} alt="User Image" />
                     <div className={classes.post__headerText}>
-                      <h3>John Doe</h3>
+                      <h3>{currentUser?.firstName || 'John Doe'}</h3>
                     </div>
                   </div>
-                  <span className={classes.post__time}>21.11.2023</span>
+                  <span className={classes.post__time}>{post.datePosted.slice(0,10)}</span>
                   <p className={classes.post__content}>
-                    {/* ... (rest of your code) */}
+                    {post.text} {/* Render the post content */}
                   </p>
                   <div className={classes.post__footer}>
                     <button className={classes.post__likeButton}>
@@ -143,9 +142,11 @@ const Cabinet = () => {
                     >
                       <FaMessage />
                     </button>
+                    
                     <PostComments isOpen={isModalOpen} onClose={handleModalToggle} />
                   </div>
                 </div>
+              ))}
               </div>
             </div>
           </div>
